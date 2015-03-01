@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>TJ's Travels with the Spirit of Troy</title>
+    <style type="text/css">
+      .place-name { font-size: large; text-align: center }
+      .info-window { max-width: 300px }
+    </style>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAb5ECrTHfai5jhJstFRBTuBRLuYtFSt4vXFvJ4UgPQHbhbe0_ixSWyEDiuZ6v89s1lvQBuyNkPYp4gA"></script>
+    <script src="places.js"></script>
+    <script type="text/javascript">
+
+    var map = null;
+    var geocoder = null;
+    var icon = null;
+     
+    function initialize() {
+      removeDisclaimer();
+      if (GBrowserIsCompatible()) {
+        map = new GMap2(document.getElementById("map_canvas"));
+        zoomToUSA();
+        map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+        geocoder = new GClientGeocoder();
+        
+        icon = new GIcon(G_DEFAULT_ICON);
+        icon.image = 'band_head.png';
+        icon.shadow = null;
+        icon.iconAnchor = new GPoint(12, 12);
+        icon.iconSize = new GSize(25, 25);
+        
+        for (i in places) {
+          var place = places[i];
+          addPlace(place)
+        }
+      }
+    }
+
+    function infoWindowNode(place) {
+      var htmlString = '<p class="place-name">' + place.name + '</p>';
+      if (place.trip) {
+        htmlString += '<p class="place-info"><b>Trip:</b> ' + place.trip + '</p>';
+      }
+      if (place.dates) {
+        htmlString += '<p class="place-info"><b>Date';
+        if (place.dates.length > 1) htmlString += 's';
+        htmlString += ':</b> ' + place.dates.join(', ')
+      }
+      var infoWindowDiv = document.createElement('div')
+      infoWindowDiv.innerHTML = htmlString;
+      infoWindowDiv.class = 'info-window';
+      return infoWindowDiv;
+    }
+    
+    function addPlace(place) {
+      if (place.location) {
+        var marker = new GMarker(place.location, {'icon':icon});
+        marker.bindInfoWindow(infoWindowNode(place));
+        map.addOverlay(marker);
+      }
+      else {
+        geocoder.getLatLng(
+        place.address,
+        function(point) {
+          if (!point) {
+            GLog.write("retrying " + place.address)
+            addPlace(place);
+          }
+          else {
+            GLog.write(place.name + ':  new GLatLng(' + point.lat() + ', ' + point.lng() + ')')
+          }
+        }
+      );
+      }
+    }
+
+    function zoomToLA() {
+      map.setCenter(new GLatLng(33.75, -118), 10);
+    }
+    
+    function zoomToUSA() {
+      map.setCenter(new GLatLng(38, -96), 4);
+    }
+    
+    function removeDisclaimer() {
+      var divs = document.getElementsByTagName('div')
+      var disclaimer = divs[divs.length-1];
+      disclaimer.parentNode.removeChild(disclaimer);
+    }
+    
+    </script>
+  </head>
+  <body onload="initialize()" onunload="GUnload()" style="font-family: Arial;border: 0 none;">
+    <p>This map shows all the places I have performed with the 
+       <a href="http://www.usc.edu/dept/band/">USC Trojan Marching Band</a>.
+       Click on any of the Trojan Band helmets for more information.</p>
+    <table><tr>
+       <td><button onclick="zoomToLA()">Focus on Los Angeles area</button></td>
+       <td><button onclick="zoomToUSA()">Focus on United States area</button></td>
+    </tr></table>
+    <div id="map_canvas" style="width: 100%; height: 800px"></div>
+    
+  </body>
+</html>
