@@ -3,9 +3,9 @@
 // TODO add Citywalk
 
 var places = [
-  {'name': 'Hell's Kitchen',
-   'address': '915 N La Brea Ave, Los Angeles, CA' // (?)
-   'trip': 'A surprise performance for the cast of Hell's Kitchen',
+  {'name': "Hell's Kitchen",
+   'address': '915 N La Brea Ave, Los Angeles, CA', // (?)
+   'trip': "A surprise performance for the cast of Hell's Kitchen",
    'dates': ['February 2009']},
    
   {'name': 'Star Wars Convention',
@@ -19,7 +19,7 @@ var places = [
    'dates': ['June 2009']},
 
   {'name': 'Universal Citywalk',
-   'address': 'Universal Citywalk'
+   'address': 'Universal Citywalk',
    'trip': 'Pre-Rose-Bowl rally at the Universal Citywalk',
    'dates': ['December 2006', 'December 2007']},
 
@@ -74,7 +74,7 @@ var places = [
    'dates': ['October 2008']},
                    
   {'name': 'Senior trip',
-   'address': 'Columbus, OH'
+   'address': 'Columbus, OH',
    'trip': 'Football game vs. ohio state',
    'dates': ['September 2009']},
  
@@ -134,7 +134,7 @@ var places = [
    'dates': ['June 2009']},
    
   {'name': 'Dancing With the Stars',
-   'address': 'CBS Studios'
+   'address': 'CBS Studios',
    'trip': 'http://www.youtube.com/watch?v=Qhp1Vgp7XUo',
    'dates': ['September 2009']},
    
