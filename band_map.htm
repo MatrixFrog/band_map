@@ -16,7 +16,6 @@
     var icon = null;
      
     function initialize() {
-      removeDisclaimer();
       if (GBrowserIsCompatible()) {
         map = new GMap2(document.getElementById("map_canvas"));
         zoomToUSA();
@@ -81,12 +80,6 @@
     
     function zoomToUSA() {
       map.setCenter(new GLatLng(38, -96), 4);
-    }
-    
-    function removeDisclaimer() {
-      var divs = document.getElementsByTagName('div')
-      var disclaimer = divs[divs.length-1];
-      disclaimer.parentNode.removeChild(disclaimer);
     }
     
     </script>
